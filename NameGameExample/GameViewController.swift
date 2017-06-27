@@ -20,6 +20,8 @@ class GameViewController: ChandlerViewController, UICollectionViewDataSource, UI
     var timeCount = 0.0
     var mode = 1
     
+    var revealedCells: [Int] = [0,0,0,0,0,0]
+    
     var curRound: Round?
     var nextRound: Round?
     
@@ -128,18 +130,22 @@ class GameViewController: ChandlerViewController, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row != 0{
+            revealedCells.insert(1, at: indexPath.row - 1)
             if mode != REVERSE{
                 if faceCells[indexPath.row - 1].reveal(){
                     curRound?.stats.addCorrectTap()
                     getNextRound()
+                }else{
+                    curRound?.stats.addIncorrectTap()
                 }
-                curRound?.stats.addIncorrectTap()
             }else{
                 if whoIsCells[indexPath.row - 1].reveal(){
                     curRound?.stats.addCorrectTap()
                     getNextRound()
+                }else{
+                    curRound?.stats.addIncorrectTap()
+
                 }
-                curRound?.stats.addIncorrectTap()
             }
             
             
@@ -248,10 +254,46 @@ class GameViewController: ChandlerViewController, UICollectionViewDataSource, UI
     }
     func timerDidUpdate(timer:Timer){
         timeCount = timeCount + 1
+        
+        if timeCount.truncatingRemainder(dividingBy: 2)  == 0{
+            revealHint()
+            
+        }
+        
     }
     func stopTimer(){
         gameClock.invalidate()
-        NSLog("\(timeCount)")
+        //reset revealed cells
+        for i in 0 ..< revealedCells.count{
+            revealedCells[i] = 0
+        }
     }
-    
+    func revealHint(){
+        if mode  ==  HINT{
+            //formal check that 5 have been used
+            var flag = 0
+            for cell in revealedCells{
+                flag = flag + cell
+            }
+            if flag < 5 {
+                let randomIndex:UInt32 = arc4random_uniform(6) // range is 0 to 5
+                let index:Int = Int(randomIndex)
+                //is this cell correct
+                if faceCells[index].isCorrect{
+                    //then dont reveal this one
+                    revealHint()
+                }else{
+                    //have I been here before
+                    if revealedCells[index] == 0 {
+                        let _ = faceCells[index].reveal()
+                        revealedCells[index] = 1
+                    }
+                    else{
+                        revealHint()
+                    }
+                }
+            }
+            
+        }
+    }
 }

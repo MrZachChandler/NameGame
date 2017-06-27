@@ -12,3 +12,4 @@ let NORMAL = 1
 let MATT = 2
 let REVERSE = 3
 let TEAM = 4
+let HINT = 5

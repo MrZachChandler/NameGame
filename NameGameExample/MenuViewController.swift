@@ -12,6 +12,7 @@ class MenuViewController: UIViewController {
     
     @IBOutlet weak var faceGame: UIButton!
     @IBOutlet weak var mattGame: UIButton!
+    @IBOutlet weak var hintGame: UIButton!
     @IBOutlet weak var teamGame: UIButton!
     @IBOutlet weak var reversedGame: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -51,6 +52,17 @@ class MenuViewController: UIViewController {
         let firstRound = NameGame.sharedInstance.loadNextRound(mode: TEAM)
         
         let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: TEAM)
+        //self.navigationController?.pushViewController(gameVC, animated: true)
+        let gameNav = ChandlerNavigationController(rootViewController: gameVC)
+        
+        self.view.window?.rootViewController = gameNav
+        
+    }
+    @IBAction func HintGame (_ sender: AnyObject) {
+        
+        let firstRound = NameGame.sharedInstance.loadNextRound(mode: HINT)
+        
+        let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: HINT)
         //self.navigationController?.pushViewController(gameVC, animated: true)
         let gameNav = ChandlerNavigationController(rootViewController: gameVC)
         
@@ -122,10 +134,10 @@ class MenuViewController: UIViewController {
     func setStats(){
         stats = NameGame.sharedInstance.getStats()
         if let avgTime = stats?.getTime(){
-            avgTimeLabel.text = String(format: "Avg Time: %.1f", avgTime)
+            avgTimeLabel.text = String(format: "Avg Time: %.1f sec", avgTime)
         }
         if let clickRatio = stats?.getClickRatio(){
-            clickRatioLabel.text = String(format: "Tap Ratio C/I: %.1f", clickRatio)
+            clickRatioLabel.text = String(format: "Tap Ratio C/I: %.1f %", clickRatio)
         }
         if let totalTaps = stats?.getTotalTaps(){
             totalTapsLabel.text = "Total Taps: \(totalTaps)"

@@ -29,7 +29,7 @@
 		CB2581591EFD8092006DD89D /* Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2581581EFD8092006DD89D /* Round.swift */; };
 		CB25815B1EFD80A3006DD89D /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25815A1EFD80A3006DD89D /* Statistics.swift */; };
 		CB686E911F01654800979D33 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB686E901F01654800979D33 /* Person.swift */; };
-		CB686E931F01DF3D00979D33 /* Flags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB686E921F01DF3D00979D33 /* Flags.swift */; };
+		CB686E931F01DF3D00979D33 /* Modes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB686E921F01DF3D00979D33 /* Modes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -72,7 +72,7 @@
 		CB2581581EFD8092006DD89D /* Round.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Round.swift; sourceTree = "<group>"; };
 		CB25815A1EFD80A3006DD89D /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		CB686E901F01654800979D33 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
-		CB686E921F01DF3D00979D33 /* Flags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flags.swift; sourceTree = "<group>"; };
+		CB686E921F01DF3D00979D33 /* Modes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Modes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,7 +251,7 @@
 				CB2581581EFD8092006DD89D /* Round.swift */,
 				CB25815A1EFD80A3006DD89D /* Statistics.swift */,
 				CB686E901F01654800979D33 /* Person.swift */,
-				CB686E921F01DF3D00979D33 /* Flags.swift */,
+				CB686E921F01DF3D00979D33 /* Modes.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -397,7 +397,7 @@
 				CB686E911F01654800979D33 /* Person.swift in Sources */,
 				CB25815B1EFD80A3006DD89D /* Statistics.swift in Sources */,
 				CB25811A1EFD45BB006DD89D /* AppDelegate.swift in Sources */,
-				CB686E931F01DF3D00979D33 /* Flags.swift in Sources */,
+				CB686E931F01DF3D00979D33 /* Modes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
