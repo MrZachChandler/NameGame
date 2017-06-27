@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Statistics {
+public class Statistics {
     
     private var correctTaps: Int
     private var incorrectTaps: Int
@@ -46,10 +46,16 @@ class Statistics {
         return time
     }
     func getClickRatio() -> Double{
-        if correctTaps == 0 || incorrectTaps == 0{
+        // zero on top = 0
+        if correctTaps == 0{
             return 0.0
         }
-        
+        //zero on bottom mean perfect ratio
+        if incorrectTaps == 0 {
+            return Double(correctTaps)
+
+        }
+        //otherwise do math
         return Double(correctTaps) / Double(incorrectTaps)
     }
     func getCorrectTaps()-> Int{

@@ -61,15 +61,8 @@ class FaceCollectionViewCell: UICollectionViewCell {
         
     }
     
-    func setCellContent(person: Person) {
-        nameLabel.text = person.firstName + " " + person.lastName
-        
-    }
-    
     func imageFromURL(urlString: String) {
         let result = "http:" + urlString
-    
-        print(result)
         URLSession.shared.dataTask(with: NSURL(string: result)! as URL, completionHandler: { (data, response, error) -> Void in
             
             if error != nil {

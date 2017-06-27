@@ -18,7 +18,7 @@
 		CB2581371EFD4A37006DD89D /* WhoIsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB2581361EFD4A37006DD89D /* WhoIsCell.xib */; };
 		CB25813E1EFD4BEB006DD89D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25813D1EFD4BEB006DD89D /* GameViewController.swift */; };
 		CB2581421EFD4C77006DD89D /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB2581411EFD4C77006DD89D /* GameViewController.xib */; };
-		CB2581441EFD4D04006DD89D /* ChandlerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2581431EFD4D04006DD89D /* ChandlerViewController.swift */; };
+		CB2581441EFD4D04006DD89D /* AnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2581431EFD4D04006DD89D /* AnimationViewController.swift */; };
 		CB2581461EFD4D40006DD89D /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2581451EFD4D40006DD89D /* MenuViewController.swift */; };
 		CB2581491EFD4D58006DD89D /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB2581481EFD4D58006DD89D /* MenuViewController.xib */; };
 		CB25814B1EFD4DD7006DD89D /* Spruce.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB25814A1EFD4DD7006DD89D /* Spruce.framework */; };
@@ -29,7 +29,7 @@
 		CB2581591EFD8092006DD89D /* Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2581581EFD8092006DD89D /* Round.swift */; };
 		CB25815B1EFD80A3006DD89D /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25815A1EFD80A3006DD89D /* Statistics.swift */; };
 		CB686E911F01654800979D33 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB686E901F01654800979D33 /* Person.swift */; };
-		CB686E931F01DF3D00979D33 /* Modes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB686E921F01DF3D00979D33 /* Modes.swift */; };
+		CB686E931F01DF3D00979D33 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB686E921F01DF3D00979D33 /* Mode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -62,7 +62,7 @@
 		CB2581361EFD4A37006DD89D /* WhoIsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhoIsCell.xib; sourceTree = "<group>"; };
 		CB25813D1EFD4BEB006DD89D /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		CB2581411EFD4C77006DD89D /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
-		CB2581431EFD4D04006DD89D /* ChandlerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChandlerViewController.swift; sourceTree = "<group>"; };
+		CB2581431EFD4D04006DD89D /* AnimationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationViewController.swift; sourceTree = "<group>"; };
 		CB2581451EFD4D40006DD89D /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		CB2581481EFD4D58006DD89D /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 		CB25814A1EFD4DD7006DD89D /* Spruce.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spruce.framework; sourceTree = "<group>"; };
@@ -72,7 +72,7 @@
 		CB2581581EFD8092006DD89D /* Round.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Round.swift; sourceTree = "<group>"; };
 		CB25815A1EFD80A3006DD89D /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		CB686E901F01654800979D33 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
-		CB686E921F01DF3D00979D33 /* Modes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Modes.swift; sourceTree = "<group>"; };
+		CB686E921F01DF3D00979D33 /* Mode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,7 +181,7 @@
 			children = (
 				CB25813C1EFD4BC7006DD89D /* CollectionViewController */,
 				CB25813B1EFD4BBE006DD89D /* Menu */,
-				CB2581431EFD4D04006DD89D /* ChandlerViewController.swift */,
+				CB2581431EFD4D04006DD89D /* AnimationViewController.swift */,
 				CB2581521EFD643C006DD89D /* ChandlerNavigationController.swift */,
 			);
 			name = Controllers;
@@ -251,7 +251,7 @@
 				CB2581581EFD8092006DD89D /* Round.swift */,
 				CB25815A1EFD80A3006DD89D /* Statistics.swift */,
 				CB686E901F01654800979D33 /* Person.swift */,
-				CB686E921F01DF3D00979D33 /* Modes.swift */,
+				CB686E921F01DF3D00979D33 /* Mode.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -392,12 +392,12 @@
 				CB2581331EFD4646006DD89D /* FaceCollectionViewCell.swift in Sources */,
 				CB2581461EFD4D40006DD89D /* MenuViewController.swift in Sources */,
 				CB2581501EFD531A006DD89D /* ViewFromNib.swift in Sources */,
-				CB2581441EFD4D04006DD89D /* ChandlerViewController.swift in Sources */,
+				CB2581441EFD4D04006DD89D /* AnimationViewController.swift in Sources */,
 				CB25813E1EFD4BEB006DD89D /* GameViewController.swift in Sources */,
 				CB686E911F01654800979D33 /* Person.swift in Sources */,
 				CB25815B1EFD80A3006DD89D /* Statistics.swift in Sources */,
 				CB25811A1EFD45BB006DD89D /* AppDelegate.swift in Sources */,
-				CB686E931F01DF3D00979D33 /* Modes.swift in Sources */,
+				CB686E931F01DF3D00979D33 /* Mode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

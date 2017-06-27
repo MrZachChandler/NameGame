@@ -7,23 +7,15 @@
 //
 
 import UIKit
+import CoreData
 
 class MenuViewController: UIViewController {
-    
-    @IBOutlet weak var faceGame: UIButton!
-    @IBOutlet weak var mattGame: UIButton!
-    @IBOutlet weak var hintGame: UIButton!
-    @IBOutlet weak var teamGame: UIButton!
-    @IBOutlet weak var reversedGame: UIButton!
-    @IBOutlet weak var fiftyfifty: UIButton!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var avgTimeLabel: UILabel!
-    @IBOutlet weak var totalTapsLabel: UILabel!
-    @IBOutlet weak var incorrectTapsLabel: UILabel!
-    @IBOutlet weak var correctTapsLabel: UILabel!
-    @IBOutlet weak var clickRatioLabel: UILabel!
 
-    var stats: Statistics?
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var gameButtons: [UIButton]!
+    @IBOutlet var statsLabel: [UILabel]!
+
+    var flag = 0
     
     @IBAction func gameModeSelected (_ sender: AnyObject) {
         startGame(mode: sender.tag)
@@ -48,16 +40,7 @@ class MenuViewController: UIViewController {
     }
     
     func loadData(){
-        //SET BUTTON TAGS
-        faceGame.tag = NORMAL
-        mattGame.tag = MATT
-        reversedGame.tag = REVERSE
-        fiftyfifty.tag = FIFTY
-        teamGame.tag = TEAM
-        hintGame.tag = HINT
         
-        
-        var flag = 0
         if NameGame.sharedInstance.completedLoad == false {
             DispatchQueue.main.async( execute: {
                 NameGame.sharedInstance.getGameData { (result) in
@@ -69,10 +52,10 @@ class MenuViewController: UIViewController {
                     else{
                         //first failure free 
                         //connection can be slow
-                        if flag == 1{
+                        if self.flag == 1{
                             self.showErrorAlert()
                         }
-                        flag += 1
+                        self.flag += 1
                     }
                 }
             })
@@ -99,21 +82,33 @@ class MenuViewController: UIViewController {
     }
     
     func setStats(){
-        stats = NameGame.sharedInstance.getStats()
-        if let avgTime = stats?.getTime(){
-            avgTimeLabel.text = String(format: "Avg Time: %.1f sec", avgTime)
-        }
-        if let clickRatio = stats?.getClickRatio(){
-            clickRatioLabel.text = String(format: "Tap Ratio C/I: %.1f", clickRatio)
-        }
-        if let totalTaps = stats?.getTotalTaps(){
-            totalTapsLabel.text = "Total Taps: \(totalTaps)"
-        }
-        if let correctTaps = stats?.getCorrectTaps(){
-            correctTapsLabel.text = "Correct Taps: \(correctTaps)"
-        }
-        if let incorrectTaps = stats?.getIncorrectTaps(){
-            incorrectTapsLabel.text = "Incorrect Taps: \(incorrectTaps)"
+        let stats = NameGame.sharedInstance.getStats()
+
+        
+        for label in statsLabel{
+            switch label.tag {
+            case 0:
+                let avgTime = stats.getTime()
+                label.text = String(format: "Avg Time: %.1f sec", avgTime)
+                break
+            case 1:
+                let clickRatio = stats.getClickRatio()
+                label.text = String(format: "Tap Ratio C/I: %.1f", clickRatio)
+                break
+            case 2:
+                let totalTaps = stats.getTotalTaps()
+                label.text = "Total Taps: \(totalTaps)"
+                break
+            case 3:
+                let correctTaps = stats.getCorrectTaps()
+                label.text = "Correct Taps: \(correctTaps)"
+                break
+            default:
+                let incorrectTaps = stats.getIncorrectTaps()
+                label.text = "Incorrect Taps: \(incorrectTaps)"
+                break
+                
+            }
         }
     }
     
@@ -124,23 +119,17 @@ class MenuViewController: UIViewController {
     func hideUI(){
         activityIndicator.startAnimating()
         activityIndicator.isHidden = false
-        mattGame.isHidden = true
-        reversedGame.isHidden = true
-        teamGame.isHidden = true
-        faceGame.isHidden = true
-        fiftyfifty.isHidden = true
-        hintGame.isHidden = true
+        for button in gameButtons{
+            button.isHidden = true
+        }
     }
     
     func showUI(){
         activityIndicator.stopAnimating()
         activityIndicator.isHidden = true
-        mattGame.isHidden = false
-        reversedGame.isHidden = false
-        teamGame.isHidden = false
-        faceGame.isHidden = false
-        hintGame.isHidden = false
-        fiftyfifty.isHidden = false
+        for button in gameButtons{
+            button.isHidden = false
+        }
     }
 
 }

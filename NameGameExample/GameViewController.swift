@@ -9,7 +9,7 @@
 import UIKit
 import Spruce
 
-class GameViewController: ChandlerViewController {
+class GameViewController: AnimationViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -21,6 +21,7 @@ class GameViewController: ChandlerViewController {
     var mode = 1
     
     var revealedCells: [Int] = [0,0,0,0,0,0]
+    var roundOver = false
     
     var curRound: Round?
     var nextRound: Round?
@@ -101,7 +102,6 @@ class GameViewController: ChandlerViewController {
         
         for i in 0 ..< range {
             
-            print (i)
             if mode != REVERSE{
                 faceCells[i].setUp(person: (curRound?.faces[i])!)
                 if curRound?.faces[i].isCorrect == true{
@@ -116,9 +116,11 @@ class GameViewController: ChandlerViewController {
             
             
         }
-        
+        roundOver = false
         startTimer()
-
+        
+        //reset revealed cells
+        revealedCells = [0,0,0,0,0,0]
         nextRound = NameGame.sharedInstance.loadNextRound(mode: mode)
 
     }
@@ -139,8 +141,6 @@ class GameViewController: ChandlerViewController {
         NameGame.sharedInstance.addRound(round: curRound!)
         curRound = nextRound
         findCorrectAnswer()
-        
-        NSLog("Starting next Round")
         prepareAnimation()
         
     }
@@ -156,6 +156,8 @@ class GameViewController: ChandlerViewController {
     }
     func backToMenu(sender: UIBarButtonItem)
     {
+        NameGame.sharedInstance.addRound(round: curRound!)
+        
         let menuVC = MenuViewController(nibName: "MenuViewController", bundle: nil)
         let menuNav = ChandlerNavigationController(rootViewController: menuVC)
         
@@ -182,17 +184,13 @@ class GameViewController: ChandlerViewController {
     }
     func stopTimer(){
         gameClock.invalidate()
-        //reset revealed cells
-        for i in 0 ..< revealedCells.count{
-            revealedCells[i] = 0
-        }
     }
     func revealHint(){
         if mode  ==  HINT{
             //formal check that 5 have been used
             var flag = 0
             for cell in revealedCells{
-                flag = flag + cell
+                flag += cell
             }
             if flag < 5 {
                 let randomIndex:UInt32 = arc4random_uniform(6) // range is 0 to 5
@@ -233,25 +231,29 @@ extension GameViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row != 0{
-            revealedCells.insert(1, at: indexPath.row - 1)
             
-            if mode == REVERSE{
-                if whoIsCells[indexPath.row - 1].reveal(){
-                    curRound?.stats.addCorrectTap()
-                    getNextRound()
+            if revealedCells[indexPath.row - 1] == 0 && roundOver == false{
+                if mode == REVERSE{
+                    if whoIsCells[indexPath.row - 1].reveal(){
+                        curRound?.stats.addCorrectTap()
+                        roundOver = true
+                        getNextRound()
+                    }else{
+                        curRound?.stats.addIncorrectTap()
+                        
+                    }
                 }else{
-                    curRound?.stats.addIncorrectTap()
-                    
+                    if faceCells[indexPath.row - 1].reveal(){
+                        curRound?.stats.addCorrectTap()
+                        roundOver = true
+                        getNextRound()
+                    }else{
+                        curRound?.stats.addIncorrectTap()
+                    }
                 }
-            }else{
-                if faceCells[indexPath.row - 1].reveal(){
-                    curRound?.stats.addCorrectTap()
-                    getNextRound()
-                }else{
-                    curRound?.stats.addIncorrectTap()
-                }
+                
+                revealedCells[indexPath.row - 1] = 1
             }
-            
             
         }
     }
@@ -291,6 +293,7 @@ extension GameViewController: UICollectionViewDataSource {
     }
     
 }
+
 // MARK: Collection View Delegate functions
 extension GameViewController: UICollectionViewDelegateFlowLayout {
     

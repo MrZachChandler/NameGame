@@ -9,9 +9,9 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import CoreData
 
-
-class NameGame: NSObject {
+public class NameGame: NSObject {
     
     static let sharedInstance = NameGame()
 
@@ -20,12 +20,14 @@ class NameGame: NSObject {
     private var team: [Person] = []
 
     private var rounds: [Round] = []
-    private var statistics: Statistics = Statistics()
     
     var completedLoad = false
+    var statistics = Statistics()
+    
     
     fileprivate override init() {
         super.init()
+        getStatsFromCoreData()
         
     }
     
@@ -151,6 +153,7 @@ class NameGame: NSObject {
         
         
     }
+    
     //recursive duplicate function
     //if duplicate is found
     //it creates a sub array of pervious elements 
@@ -169,7 +172,9 @@ class NameGame: NSObject {
         }
         return returnIndex
     }
-    func getStats()-> Statistics{
+    
+    func getStats() -> Statistics {
+
         if rounds.count == 0{
             return statistics
         }
@@ -181,8 +186,94 @@ class NameGame: NSObject {
 
         }
         let avgTime = totalTime / Double(rounds.count)
-        
-        statistics.setTime(time: avgTime)
+        if avgTime != 0{
+            statistics.setTime(time: avgTime)
+        }
+        rounds.removeAll()
+        updateStats()
         return statistics
     }
+    
+    func updateStats(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let request: NSFetchRequest<PlayerStatistics> = PlayerStatistics.fetchRequest()
+        
+        do{
+            let results = try context.fetch(request)
+            if results.count == 1 {
+                let result = results[0]
+                result.setValue(statistics.getCorrectTaps(), forKey: "correctTaps")
+                result.setValue(statistics.getIncorrectTaps(), forKey: "incorrectTaps")
+                result.setValue(statistics.getTime(), forKey: "avgTime")
+                do{
+                    try context.save()
+                    print("Saved updated Stats")
+                }
+                catch{
+                    print("Failed updated Stats save")
+                }
+                
+            }else{
+                //there is nothing saved ie first time user
+                //so i will save a new object
+                
+                let newStats = NSEntityDescription.insertNewObject(forEntityName: "PlayerStatistics", into: context)
+                newStats.setValue(statistics.getCorrectTaps(), forKey: "correctTaps")
+                newStats.setValue(statistics.getIncorrectTaps(), forKey: "incorrectTaps")
+                newStats.setValue(statistics.getTime(), forKey: "avgTime")
+                
+                do{
+                    try context.save()
+                    print("Saved Stats for the first time")
+                }
+                catch{
+                    print("Failed Stats save")
+                }
+            }
+            
+                
+        }
+        catch{
+            
+          
+        }
+        
+        
+
+    }
+    func getStatsFromCoreData(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PlayerStatistics")
+        
+        do{
+            let results = try context.fetch(request)
+            print(results.count)
+            if results.count == 1 {
+                print("successfully received stats from core data")
+                if let correctTaps = (results[0] as AnyObject).value(forKey: "correctTaps") as? UInt32{
+                    statistics.addCorrectTaps(taps: Int(correctTaps))
+                }
+                if let incorrectTaps = (results[0] as AnyObject).value(forKey: "incorrectTaps") as? UInt32{
+                    statistics.addIncorrectTaps(taps: Int(incorrectTaps))
+                }
+                if let time = (results[0] as AnyObject).value(forKey: "avgTime") as? Double{
+                    statistics.setTime(time: time)
+                }
+                
+            }else{
+                print("Welcome first time user")
+            }
+            
+            
+        }
+        catch{
+            
+            
+        }
+    }
+        
 }
