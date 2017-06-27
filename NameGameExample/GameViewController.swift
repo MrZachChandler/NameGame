@@ -9,7 +9,7 @@
 import UIKit
 import Spruce
 
-class GameViewController: ChandlerViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class GameViewController: ChandlerViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -61,100 +61,11 @@ class GameViewController: ChandlerViewController, UICollectionViewDataSource, UI
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if mode == FIFTY{
-            return 3
-        }
-        return 7
-    }
     
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if mode == REVERSE{
-            if indexPath.row == 0{
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FaceCollectionViewCell", for: indexPath) as! FaceCollectionViewCell
-                if let content = correctAnswer{
-                    cell.setUp(person: content)
-                }
-                faceCells.insert(cell, at: 0)
-                return cell
-            }
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WhoIsCell", for: indexPath) as! WhoIsCell
-            cell.setUp(person: (curRound?.faces[indexPath.row - 1])!)
-            whoIsCells.insert(cell, at: indexPath.row - 1)
-
-            return cell
-            
-        }
-        if indexPath.row == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WhoIsCell", for: indexPath) as! WhoIsCell
-            if let content = correctAnswer{
-                cell.setUp(person: content)
-            }
-            whoIsCells.insert(cell, at: 0)
-            return cell
-        }
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FaceCollectionViewCell", for: indexPath) as! FaceCollectionViewCell
-        
-        cell.setUp(person: (curRound?.faces[indexPath.row - 1])!)
-        
-        faceCells.insert(cell, at: indexPath.row - 1)
-        return cell
-    }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if mode == REVERSE{
-            if indexPath.row == 0{
-                return FaceCollectionViewCell().cellSize
-                
-            }
-            return WhoIsCell().cellSize
-        }
-        if indexPath.row == 0{
-            return WhoIsCell().cellSize
-            
-        }
-        return FaceCollectionViewCell().cellSize
-    }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10.0
-    }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10.0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row != 0{
-            revealedCells.insert(1, at: indexPath.row - 1)
-            
-            if mode == REVERSE{
-                if whoIsCells[indexPath.row - 1].reveal(){
-                    curRound?.stats.addCorrectTap()
-                    getNextRound()
-                }else{
-                    curRound?.stats.addIncorrectTap()
-                    
-                }
-            }else{
-                if faceCells[indexPath.row - 1].reveal(){
-                    curRound?.stats.addCorrectTap()
-                    getNextRound()
-                }else{
-                    curRound?.stats.addIncorrectTap()
-                }
-            }
-            
-            
-        }
-    }
     
     override func setup() {
         
@@ -305,3 +216,107 @@ class GameViewController: ChandlerViewController, UICollectionViewDataSource, UI
         }
     }
 }
+
+// MARK: Collection View Data Source functions
+extension GameViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if mode == FIFTY{
+            return 3
+        }
+        return 7
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row != 0{
+            revealedCells.insert(1, at: indexPath.row - 1)
+            
+            if mode == REVERSE{
+                if whoIsCells[indexPath.row - 1].reveal(){
+                    curRound?.stats.addCorrectTap()
+                    getNextRound()
+                }else{
+                    curRound?.stats.addIncorrectTap()
+                    
+                }
+            }else{
+                if faceCells[indexPath.row - 1].reveal(){
+                    curRound?.stats.addCorrectTap()
+                    getNextRound()
+                }else{
+                    curRound?.stats.addIncorrectTap()
+                }
+            }
+            
+            
+        }
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if mode == REVERSE{
+            if indexPath.row == 0{
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FaceCollectionViewCell", for: indexPath) as! FaceCollectionViewCell
+                if let content = correctAnswer{
+                    cell.setUp(person: content)
+                }
+                faceCells.insert(cell, at: 0)
+                return cell
+            }
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WhoIsCell", for: indexPath) as! WhoIsCell
+            cell.setUp(person: (curRound?.faces[indexPath.row - 1])!)
+            whoIsCells.insert(cell, at: indexPath.row - 1)
+            
+            return cell
+            
+        }
+        if indexPath.row == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WhoIsCell", for: indexPath) as! WhoIsCell
+            if let content = correctAnswer{
+                cell.setUp(person: content)
+            }
+            whoIsCells.insert(cell, at: 0)
+            return cell
+        }
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FaceCollectionViewCell", for: indexPath) as! FaceCollectionViewCell
+        
+        cell.setUp(person: (curRound?.faces[indexPath.row - 1])!)
+        
+        faceCells.insert(cell, at: indexPath.row - 1)
+        return cell
+    }
+    
+}
+// MARK: Collection View Delegate functions
+extension GameViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if mode == REVERSE{
+            if indexPath.row == 0{
+                return FaceCollectionViewCell().cellSize
+                
+            }
+            return WhoIsCell().cellSize
+        }
+        if indexPath.row == 0{
+            return WhoIsCell().cellSize
+            
+        }
+        return FaceCollectionViewCell().cellSize
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10.0
+    }
+    
+    
+}
+

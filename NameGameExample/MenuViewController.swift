@@ -25,68 +25,12 @@ class MenuViewController: UIViewController {
 
     var stats: Statistics?
     
-    @IBAction func NameGameNormal (_ sender: AnyObject) {
-        
-        let firstRound = NameGame.sharedInstance.loadNextRound(mode: NORMAL)
-        
-        let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: NORMAL)
-        let gameNav = ChandlerNavigationController(rootViewController: gameVC)
-
-        self.view.window?.rootViewController = gameNav
+    @IBAction func gameModeSelected (_ sender: AnyObject) {
+        startGame(mode: sender.tag)
         
     }
     
-    @IBAction func MattGame (_ sender: AnyObject) {
-        
-        let firstRound = NameGame.sharedInstance.loadNextRound(mode: MATT)
-        
-        let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: MATT)
-        let gameNav = ChandlerNavigationController(rootViewController: gameVC)
-        
-        self.view.window?.rootViewController = gameNav
-        
-    }
-    @IBAction func TeamGame (_ sender: AnyObject) {
-        
-        let firstRound = NameGame.sharedInstance.loadNextRound(mode: TEAM)
-        
-        let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: TEAM)
-        let gameNav = ChandlerNavigationController(rootViewController: gameVC)
-        
-        self.view.window?.rootViewController = gameNav
-        
-    }
-    @IBAction func HintGame (_ sender: AnyObject) {
-        
-        let firstRound = NameGame.sharedInstance.loadNextRound(mode: HINT)
-        
-        let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: HINT)
-        //self.navigationController?.pushViewController(gameVC, animated: true)
-        let gameNav = ChandlerNavigationController(rootViewController: gameVC)
-        
-        self.view.window?.rootViewController = gameNav
-        
-    }
-    @IBAction func ReversedGame (_ sender: AnyObject) {
-        
-        let firstRound = NameGame.sharedInstance.loadNextRound(mode: REVERSE)
-        
-        let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: REVERSE)
-        let gameNav = ChandlerNavigationController(rootViewController: gameVC)
-        
-        self.view.window?.rootViewController = gameNav
-        
-    }
-    @IBAction func FiftyFifty (_ sender: AnyObject) {
-        
-        let firstRound = NameGame.sharedInstance.loadNextRound(mode: FIFTY)
-        
-        let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: FIFTY)
-        let gameNav = ChandlerNavigationController(rootViewController: gameVC)
-        
-        self.view.window?.rootViewController = gameNav
-        
-    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         hideUI()
@@ -94,7 +38,24 @@ class MenuViewController: UIViewController {
         
     }
     
+    func startGame(mode: Int){
+        let firstRound = NameGame.sharedInstance.loadNextRound(mode: mode)
+        
+        let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: mode)
+        let gameNav = ChandlerNavigationController(rootViewController: gameVC)
+        
+        self.view.window?.rootViewController = gameNav
+    }
+    
     func loadData(){
+        //SET BUTTON TAGS
+        faceGame.tag = NORMAL
+        mattGame.tag = MATT
+        reversedGame.tag = REVERSE
+        fiftyfifty.tag = FIFTY
+        teamGame.tag = TEAM
+        hintGame.tag = HINT
+        
         
         var flag = 0
         if NameGame.sharedInstance.completedLoad == false {

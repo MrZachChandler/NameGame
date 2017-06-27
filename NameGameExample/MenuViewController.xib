@@ -68,7 +68,7 @@
                     <rect key="frame" x="147" y="223" width="81" height="30"/>
                     <state key="normal" title="NameGame"/>
                     <connections>
-                        <action selector="NameGameNormal:" destination="-1" eventType="touchUpInside" id="bcN-Eb-49H"/>
+                        <action selector="gameModeSelected:" destination="-1" eventType="touchUpInside" id="wB1-d8-PIe"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ams-Cq-nNx">
@@ -78,35 +78,35 @@
                     </constraints>
                     <state key="normal" title="Mat(t) Mode"/>
                     <connections>
-                        <action selector="MattGame:" destination="-1" eventType="touchUpInside" id="Umq-G9-K2v"/>
+                        <action selector="gameModeSelected:" destination="-1" eventType="touchUpInside" id="Xg4-qw-cLW"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8qF-cb-13e">
                     <rect key="frame" x="140" y="299" width="95" height="30"/>
                     <state key="normal" title="Team Mode"/>
                     <connections>
-                        <action selector="TeamGame:" destination="-1" eventType="touchUpInside" id="5fR-FY-QXA"/>
+                        <action selector="gameModeSelected:" destination="-1" eventType="touchUpInside" id="aei-RW-eFJ"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fkz-za-YFu">
                     <rect key="frame" x="140" y="337" width="95" height="30"/>
                     <state key="normal" title="Reversed"/>
                     <connections>
-                        <action selector="ReversedGame:" destination="-1" eventType="touchUpInside" id="VNK-O8-wIt"/>
+                        <action selector="gameModeSelected:" destination="-1" eventType="touchUpInside" id="9xH-WA-vOR"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g9D-RU-f6j">
                     <rect key="frame" x="150" y="375" width="71" height="30"/>
                     <state key="normal" title="Hint Mode"/>
                     <connections>
-                        <action selector="HintGame:" destination="-1" eventType="touchUpInside" id="iOL-kz-dvG"/>
+                        <action selector="gameModeSelected:" destination="-1" eventType="touchUpInside" id="ETi-MV-hyU"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLf-92-MAZ">
                     <rect key="frame" x="160" y="413" width="50" height="30"/>
                     <state key="normal" title="50 / 50"/>
                     <connections>
-                        <action selector="FiftyFifty:" destination="-1" eventType="touchUpInside" id="4xY-n6-eeD"/>
+                        <action selector="gameModeSelected:" destination="-1" eventType="touchUpInside" id="UJQ-Qt-SiE"/>
                     </connections>
                 </button>
             </subviews>
