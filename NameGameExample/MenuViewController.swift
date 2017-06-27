@@ -15,6 +15,7 @@ class MenuViewController: UIViewController {
     @IBOutlet weak var hintGame: UIButton!
     @IBOutlet weak var teamGame: UIButton!
     @IBOutlet weak var reversedGame: UIButton!
+    @IBOutlet weak var fiftyfifty: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var avgTimeLabel: UILabel!
     @IBOutlet weak var totalTapsLabel: UILabel!
@@ -29,7 +30,6 @@ class MenuViewController: UIViewController {
         let firstRound = NameGame.sharedInstance.loadNextRound(mode: NORMAL)
         
         let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: NORMAL)
-        //self.navigationController?.pushViewController(gameVC, animated: true)
         let gameNav = ChandlerNavigationController(rootViewController: gameVC)
 
         self.view.window?.rootViewController = gameNav
@@ -41,7 +41,6 @@ class MenuViewController: UIViewController {
         let firstRound = NameGame.sharedInstance.loadNextRound(mode: MATT)
         
         let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: MATT)
-        //self.navigationController?.pushViewController(gameVC, animated: true)
         let gameNav = ChandlerNavigationController(rootViewController: gameVC)
         
         self.view.window?.rootViewController = gameNav
@@ -52,7 +51,6 @@ class MenuViewController: UIViewController {
         let firstRound = NameGame.sharedInstance.loadNextRound(mode: TEAM)
         
         let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: TEAM)
-        //self.navigationController?.pushViewController(gameVC, animated: true)
         let gameNav = ChandlerNavigationController(rootViewController: gameVC)
         
         self.view.window?.rootViewController = gameNav
@@ -74,13 +72,21 @@ class MenuViewController: UIViewController {
         let firstRound = NameGame.sharedInstance.loadNextRound(mode: REVERSE)
         
         let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: REVERSE)
-        //self.navigationController?.pushViewController(gameVC, animated: true)
         let gameNav = ChandlerNavigationController(rootViewController: gameVC)
         
         self.view.window?.rootViewController = gameNav
         
     }
-    
+    @IBAction func FiftyFifty (_ sender: AnyObject) {
+        
+        let firstRound = NameGame.sharedInstance.loadNextRound(mode: FIFTY)
+        
+        let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: FIFTY)
+        let gameNav = ChandlerNavigationController(rootViewController: gameVC)
+        
+        self.view.window?.rootViewController = gameNav
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         hideUI()
@@ -137,7 +143,7 @@ class MenuViewController: UIViewController {
             avgTimeLabel.text = String(format: "Avg Time: %.1f sec", avgTime)
         }
         if let clickRatio = stats?.getClickRatio(){
-            clickRatioLabel.text = String(format: "Tap Ratio C/I: %.1f %", clickRatio)
+            clickRatioLabel.text = String(format: "Tap Ratio C/I: %.1f", clickRatio)
         }
         if let totalTaps = stats?.getTotalTaps(){
             totalTapsLabel.text = "Total Taps: \(totalTaps)"
@@ -161,6 +167,8 @@ class MenuViewController: UIViewController {
         reversedGame.isHidden = true
         teamGame.isHidden = true
         faceGame.isHidden = true
+        fiftyfifty.isHidden = true
+        hintGame.isHidden = true
     }
     
     func showUI(){
@@ -170,6 +178,8 @@ class MenuViewController: UIViewController {
         reversedGame.isHidden = false
         teamGame.isHidden = false
         faceGame.isHidden = false
+        hintGame.isHidden = false
+        fiftyfifty.isHidden = false
     }
 
 }

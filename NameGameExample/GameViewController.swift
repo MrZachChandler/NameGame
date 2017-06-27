@@ -66,6 +66,9 @@ class GameViewController: ChandlerViewController, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if mode == FIFTY{
+            return 3
+        }
         return 7
     }
     
@@ -131,20 +134,21 @@ class GameViewController: ChandlerViewController, UICollectionViewDataSource, UI
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row != 0{
             revealedCells.insert(1, at: indexPath.row - 1)
-            if mode != REVERSE{
-                if faceCells[indexPath.row - 1].reveal(){
-                    curRound?.stats.addCorrectTap()
-                    getNextRound()
-                }else{
-                    curRound?.stats.addIncorrectTap()
-                }
-            }else{
+            
+            if mode == REVERSE{
                 if whoIsCells[indexPath.row - 1].reveal(){
                     curRound?.stats.addCorrectTap()
                     getNextRound()
                 }else{
                     curRound?.stats.addIncorrectTap()
-
+                    
+                }
+            }else{
+                if faceCells[indexPath.row - 1].reveal(){
+                    curRound?.stats.addCorrectTap()
+                    getNextRound()
+                }else{
+                    curRound?.stats.addIncorrectTap()
                 }
             }
             
@@ -179,9 +183,12 @@ class GameViewController: ChandlerViewController, UICollectionViewDataSource, UI
     }
     
     override func reload(){
+        var range = 6
+        if mode == FIFTY{
+            range = 2
+        }
         
-        
-        for i in 0 ..< 6 {
+        for i in 0 ..< range {
             
             print (i)
             if mode != REVERSE{
@@ -204,6 +211,7 @@ class GameViewController: ChandlerViewController, UICollectionViewDataSource, UI
         nextRound = NameGame.sharedInstance.loadNextRound(mode: mode)
 
     }
+    
     
     func getNextRound() {
         let nextItem = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.plain, target: self, action: #selector(startNextRound(sender:)))

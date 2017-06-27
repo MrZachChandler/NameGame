@@ -99,6 +99,7 @@ class NameGame: NSObject {
     
     func loadNextRound(mode: Int) -> Round{
         var source: [Person] = []
+        var numberOfPeople = 6
         switch mode{
         case NORMAL:
             source = people
@@ -109,6 +110,10 @@ class NameGame: NSObject {
         case TEAM:
             source = team
             break
+        case FIFTY:
+            numberOfPeople = 2
+            source = people
+            break
         default:
             source = people
             break;
@@ -118,8 +123,8 @@ class NameGame: NSObject {
         
 
         
-        //Get 6 random people
-        for i in 0 ..< 6 {
+        //Get n random people
+        for i in 0 ..< numberOfPeople {
             
             let randomNum:UInt32 = arc4random_uniform(UInt32(source.count))
 
@@ -131,11 +136,15 @@ class NameGame: NSObject {
             nextRound.faces.append(source[index])
             
         }
+        
         // choose correct person
-        let correctIndex:UInt32 = arc4random_uniform(6) // range is 0 to 5
+        
+        let correctIndex:UInt32 = arc4random_uniform(UInt32(numberOfPeople)) // range is 0 to n
         let correctFace:Int = Int(correctIndex)
         
         nextRound.faces[correctFace].isCorrect = true
+        
+        
         
         
         return nextRound
