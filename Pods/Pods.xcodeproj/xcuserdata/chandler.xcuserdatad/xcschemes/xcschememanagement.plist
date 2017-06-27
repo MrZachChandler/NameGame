@@ -9,11 +9,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>AlamofireImage.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-NameGameExample.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,22 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0D2B0A1545380D0C29FA47CE7495082F</key>
+		<key>3BDF201FCE4EA815714E911FFE18214A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1CE5BE0A9D5B50E6A0E99DF08E805EB4</key>
+		<key>7D996AC15CE5694A475A50DB9B9CF640</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9EFE4C70245EE2857D336B8B9FA4E825</key>
 		<dict>
 			<key>primary</key>
 			<true/>

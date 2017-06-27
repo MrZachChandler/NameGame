@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Statistics {
+public class Statistics {
     
     private var correctTaps: Int
     private var incorrectTaps: Int

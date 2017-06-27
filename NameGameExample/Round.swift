@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Round {
+public struct Round {
     
     var stats = Statistics()
     var faces: [Person] = []

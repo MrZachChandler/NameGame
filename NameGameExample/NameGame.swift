@@ -11,7 +11,7 @@ import Alamofire
 import SwiftyJSON
 
 
-class NameGame: NSObject {
+public class NameGame: NSObject {
     
     static let sharedInstance = NameGame()
 

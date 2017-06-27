@@ -21,6 +21,7 @@ class GameViewController: ChandlerViewController {
     var mode = 1
     
     var revealedCells: [Int] = [0,0,0,0,0,0]
+    var roundOver = false
     
     var curRound: Round?
     var nextRound: Round?
@@ -116,9 +117,9 @@ class GameViewController: ChandlerViewController {
             
             
         }
-        
+        roundOver = false
         startTimer()
-
+        
         nextRound = NameGame.sharedInstance.loadNextRound(mode: mode)
 
     }
@@ -233,25 +234,29 @@ extension GameViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row != 0{
-            revealedCells.insert(1, at: indexPath.row - 1)
             
-            if mode == REVERSE{
-                if whoIsCells[indexPath.row - 1].reveal(){
-                    curRound?.stats.addCorrectTap()
-                    getNextRound()
+            if revealedCells[indexPath.row - 1] == 0 && roundOver == false{
+                if mode == REVERSE{
+                    if whoIsCells[indexPath.row - 1].reveal(){
+                        curRound?.stats.addCorrectTap()
+                        roundOver = true
+                        getNextRound()
+                    }else{
+                        curRound?.stats.addIncorrectTap()
+                        
+                    }
                 }else{
-                    curRound?.stats.addIncorrectTap()
-                    
+                    if faceCells[indexPath.row - 1].reveal(){
+                        curRound?.stats.addCorrectTap()
+                        roundOver = true
+                        getNextRound()
+                    }else{
+                        curRound?.stats.addIncorrectTap()
+                    }
                 }
-            }else{
-                if faceCells[indexPath.row - 1].reveal(){
-                    curRound?.stats.addCorrectTap()
-                    getNextRound()
-                }else{
-                    curRound?.stats.addIncorrectTap()
-                }
+                
+                revealedCells.insert(1, at: indexPath.row - 1)
             }
-            
             
         }
     }
@@ -291,6 +296,7 @@ extension GameViewController: UICollectionViewDataSource {
     }
     
 }
+
 // MARK: Collection View Delegate functions
 extension GameViewController: UICollectionViewDelegateFlowLayout {
     
