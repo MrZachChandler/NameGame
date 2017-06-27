@@ -9,7 +9,7 @@
 import UIKit
 import Spruce
 
-class ChandlerViewController: UIViewController {
+class AnimationViewController: UIViewController {
     let animations: [StockAnimation]
     var sortFunction: SortFunction?
     var animationView: UIView?

@@ -61,11 +61,6 @@ class FaceCollectionViewCell: UICollectionViewCell {
         
     }
     
-    func setCellContent(person: Person) {
-        nameLabel.text = person.firstName + " " + person.lastName
-        
-    }
-    
     func imageFromURL(urlString: String) {
         let result = "http:" + urlString
     

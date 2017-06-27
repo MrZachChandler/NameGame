@@ -9,7 +9,7 @@
 import UIKit
 import Spruce
 
-class GameViewController: ChandlerViewController {
+class GameViewController: AnimationViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -157,6 +157,8 @@ class GameViewController: ChandlerViewController {
     }
     func backToMenu(sender: UIBarButtonItem)
     {
+        NameGame.sharedInstance.addRound(round: curRound!)
+        
         let menuVC = MenuViewController(nibName: "MenuViewController", bundle: nil)
         let menuNav = ChandlerNavigationController(rootViewController: menuVC)
         

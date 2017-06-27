@@ -1,140 +1,42 @@
-# NameGame
+# Name Game Example #
 
-# Dependencies
+My version of the Name Game. This is an example application to view my style of software development. I tried to include examples of some major programming/iOS practices like: Recursion , Inheritance, Extensions, Protocols, Views From Nib, Multi-Threading, Singletons, Core Data, Classes, Structures, CocoaPods, Linked Frameworks (Spruce), Constants, Pass-By-Value, Pass-By-Reference. I do admit that it was rather challenging implementing this in under 8 hours. I took a couple hours longer to refactor and tidy up some code. The rushed timely implicitly degrades the code quality, but regardless with proper planning and experience it should not impact the code greatly. 
 
-Unless there is an explicit reason for having `Spruce.framework` in the top
-level, I'd put it in the Podfile and let them manage the framework to keep the
-file structure and project navigator clean.
+![Login View](img/ScreenShot.png)
 
-`AlamofireImage` and `SwiftyJSON` should have minimum versions specified in
-the pod file.
 
-# README
+## Getting Started
 
-READMEs are always a good idea, if for no other reason to remind yourself how
-to setup an old project when you come back to it later.
+### Dependency Management
 
-[iOS README Practices](https://github.com/futurice/ios-good-practices/blob/master/README.md)
+#### CocoaPods
 
-[iOS README Boilerplate](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
+If you're planning on including external dependencies (e.g. third-party libraries) in your project, [CocoaPods][cocoapods] offers easy and fast integration. Install it like so:
 
-# File System
+sudo gem install cocoapods
 
-Although XCode kind of takes care of the filesystem with groups, I think
-its better to mirror the XCode groups as filesystem directories so what you see in the
-XCode navigator matches the folder structure and whats on GitHub.
+To get started, move inside your iOS project folder and run
 
-## xibs
+pod init
 
-`.xib` files should be in the Base.lproj folder. This makes it easier to
-localize applications to other languages.
+This creates a Podfile, which will hold all your dependencies in one place. After adding your dependencies to the Podfile, you run
 
-I'd switch to storyboards instead of xibs for view controllers, they make it
-much easier to build multiview apps and are the accepted standard these days
-for view controllers.
+pod install
 
-I'd also look into [ibinspectable-ibdesignable](http://nshipster.com/ibinspectable-ibdesignable/).
-It's hard to get it working fluidly, but once you do it makes building
-reusable UI components much easier. I can share some code with you that I wrote
-recelty for making IBDesignable classes with an associated Xib.
+to install the libraries and include them as part of a workspace which also holds your own project. It is generally [recommended to commit the installed dependencies to your own repo][committing-pods], instead of relying on having each developer running `pod install` after a fresh checkout.
 
-# Logic Tests
+Note that from now on, you'll need to open the `.xcworkspace` file instead of `.xcproject`, or your code will not compile. The command
 
-The NameGame class is pretty complex and doesn't have any logic tests. I
-imagine they'll probably want to see you have some experience with XCTest or
-some other testing framework for building models.
+pod update
 
-# UI Tests
+will update all pods to the newest versions permitted by the Podfile. You can use a wealth of [operators][cocoapods-pod-syntax] to specify your exact version requirements.
 
-Probably not a huge deal for this kind of project, but another one of those
-things I bet they'd like to see is some UI tests with something like
-[XCUITest](https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/testing_with_xcode/chapters/09-ui_testing.html).
+[cocoapods]: https://cocoapods.org/
+[cocoapods-pod-syntax]: http://guides.cocoapods.org/syntax/podfile.html#pod
+[committing-pods]: https://www.dzombak.com/blog/2014/03/including-pods-in-source-control.html
 
-[Apple Docs on Testing](https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/testing_with_xcode/chapters/04-writing_tests.html#//apple_ref/doc/uid/TP40014132-CH4-SW1)
+### Project Structure
 
-# Documentation
+![Login View](img/NameGameModel.png)
 
-I'd document all:
-* functions
-* instance variables
-* classes
-* structs
 
-Another one of those if for no other reason so you can come back to some random
-thing and know whats going on and where you left off.
-
-XCode Quickhelp can autorender documentation too. If you open the left panel
-and click the ? circle and then click a function name or variable it will
-show the docs for it.
-
-plus jazzy relies on that so if you end up publishing something, you'd never
-have to do much to publish your docs too.
-
-# Code
-
-## Interfaces
-
-implementing all protocols in the main body of classes makes them ugly, plus
-moving all the `UICollectionViewDataSource` and
-`UICollectionViewDelegateFlowLayout` code to their own extensions keeps stuff
-organized.
-
-```swift
-class GameViewController: ChandlerViewController, UICollectionViewDataSource,
-    UICollectionViewDelegateFlowLayout {
-```
-
-to
-
-```swift
-class GameViewController: ChandlerViewController {
-  ...
-}
-
-// MARK: Collection View Data Source functions
-extension GameViewController: UICollectionViewDataSource {
-  ...
-}
-
-// MARK: Collection View Delegate functions
-extension GameViewController: UICollectionViewDelegateFlowLayout {
-  ...
-}
-```
-
-## `ChandlerViewController`
-
-The name of this class should probably be something more like
-`AnimationViewController`
-
-## `ChandlerNavigationController`
-
-since you're just adding some functionality to `UINavigationController`, why
-not just use and extension?
-
-## MenuViewController
-
-### Instance members
-
-There are a lot of view instances owned by this controller, this is a good use
-case for IBDesignables where you could put the buttons in their own xib/view
-and same with the labels to then just have 3 subviews owned by the controller.
-
-### IBActions
-
-The IBActions all do the exact same thing. i'd refactor it to this:
-
-```swift
-func startGame (mode: Int) {
-    let firstRound = NameGame.sharedInstance.loadNextRound(mode: mode)
-
-    let gameVC = GameViewController(nibName: "GameViewController", bundle: nil,round: firstRound, animations: [.slide(.down, .severely), .fadeIn], mode: mode)
-    let gameNav = ChandlerNavigationController(rootViewController: gameVC)
-
-    self.view.window?.rootViewController = gameNav
-}
-
-@IBAction func NameGameNormal (_ sender: AnyObject) {
-    startGame(mode: NORMAL)
-}
-```
