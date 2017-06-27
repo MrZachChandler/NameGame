@@ -102,7 +102,6 @@ class GameViewController: AnimationViewController {
         
         for i in 0 ..< range {
             
-            print (i)
             if mode != REVERSE{
                 faceCells[i].setUp(person: (curRound?.faces[i])!)
                 if curRound?.faces[i].isCorrect == true{
@@ -120,6 +119,8 @@ class GameViewController: AnimationViewController {
         roundOver = false
         startTimer()
         
+        //reset revealed cells
+        revealedCells = [0,0,0,0,0,0]
         nextRound = NameGame.sharedInstance.loadNextRound(mode: mode)
 
     }
@@ -140,8 +141,6 @@ class GameViewController: AnimationViewController {
         NameGame.sharedInstance.addRound(round: curRound!)
         curRound = nextRound
         findCorrectAnswer()
-        
-        NSLog("Starting next Round")
         prepareAnimation()
         
     }
@@ -185,17 +184,13 @@ class GameViewController: AnimationViewController {
     }
     func stopTimer(){
         gameClock.invalidate()
-        //reset revealed cells
-        for i in 0 ..< revealedCells.count{
-            revealedCells[i] = 0
-        }
     }
     func revealHint(){
         if mode  ==  HINT{
             //formal check that 5 have been used
             var flag = 0
             for cell in revealedCells{
-                flag = flag + cell
+                flag += cell
             }
             if flag < 5 {
                 let randomIndex:UInt32 = arc4random_uniform(6) // range is 0 to 5
@@ -257,7 +252,7 @@ extension GameViewController: UICollectionViewDataSource {
                     }
                 }
                 
-                revealedCells.insert(1, at: indexPath.row - 1)
+                revealedCells[indexPath.row - 1] = 1
             }
             
         }

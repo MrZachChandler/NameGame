@@ -63,8 +63,6 @@ class FaceCollectionViewCell: UICollectionViewCell {
     
     func imageFromURL(urlString: String) {
         let result = "http:" + urlString
-    
-        print(result)
         URLSession.shared.dataTask(with: NSURL(string: result)! as URL, completionHandler: { (data, response, error) -> Void in
             
             if error != nil {
