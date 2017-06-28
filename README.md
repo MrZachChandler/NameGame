@@ -6,8 +6,8 @@ My version of the Name Game. This is an example application to view my style of 
 Shout out to Sketch for making this photo in under a minute.
 
 ## Getting Started
-If your're view the project from a zip please click [GitHub Link][1]
-                                                     [1](https://github.com/MrZachChandler/NameGame)
+If your're view the project from a zip please click [GitHubLink]
+                                                     [GitHubLink](https://github.com/MrZachChandler/NameGame)
 ### Dependency Management
 
 #### CocoaPods
