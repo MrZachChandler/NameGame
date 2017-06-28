@@ -22,6 +22,18 @@ class MenuViewController: UIViewController {
         
     }
     
+    @IBAction func GitHubDocs(sender: AnyObject) {
+        if let url = URL(string: "https://github.com/MrZachChandler/NameGame"){
+            UIApplication.shared.openURL(url as URL)
+            UIApplication.shared.open(url, options: [:], completionHandler: { (success) in
+                func showErrorAlert(){
+                    let alert = UIAlertController(title: "Something Went Wrong! Try this link", message: "https://github.com/MrZachChandler/NameGame", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Got It!", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            })
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
