@@ -121,10 +121,10 @@ public class NameGame: NSObject {
             break;
         }
         var nextRound = Round()
+        
+        
         var indexArray: [Int] = []
-        
 
-        
         //Get n random people
         for i in 0 ..< numberOfPeople {
             

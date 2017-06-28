@@ -47,9 +47,6 @@ class GameViewController: AnimationViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = false
-        collectionView.delegate = self
-        self.collectionView!.alwaysBounceVertical = true
         setup()
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -69,6 +66,10 @@ class GameViewController: AnimationViewController {
     
     
     override func setup() {
+        
+        self.navigationController?.isNavigationBarHidden = false
+        collectionView.delegate = self
+        self.collectionView!.alwaysBounceVertical = true
         
         let menuItem = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.plain, target: self, action: #selector(backToMenu(sender:)))
         
