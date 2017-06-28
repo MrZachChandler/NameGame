@@ -1,5 +1,5 @@
 # Name Game Example #
-If your're view the project from a zip please click [GitHubLink](https://github.com/MrZachChandler/NameGame) for better readablity.
+If your're viewing the project from a downloaded version please click [GitHubLink](https://github.com/MrZachChandler/NameGame) for better readablity of this document.
 
 My version of the Name Game. This is an example application to view my style of software development. I tried to include examples of some major programming/iOS practices like: Recursion , Inheritance, Extensions, Protocols, Views From Nib, MultiThreading, Singletons, Core Data, Classes, Structures, CocoaPods, Linked Frameworks, Constants, Pass-By-Value, Pass-By-Reference, URL Sessions, Object Oriented Programming. I do admit that it was rather challenging implementing this in under 8 hours. I took a couple hours longer to refactor and write this README. 
 
