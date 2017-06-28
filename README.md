@@ -1,18 +1,18 @@
 # Name Game Example #
+If your're view the project from a zip please click [GitHubLink](https://github.com/MrZachChandler/NameGame) for better readablity.
 
-My version of the Name Game. This is an example application to view my style of software development. I tried to include examples of some major programming/iOS practices like: Recursion , Inheritance, Extensions, Protocols, Views From Nib, Multi-Threading, Singletons, Core Data, Classes, Structures, CocoaPods, Linked Frameworks (Spruce), Constants, Pass-By-Value, Pass-By-Reference, URL Sessions, Object Oriented Programming. I do admit that it was rather challenging implementing this in under 8 hours. I took a couple hours longer to refactor and write this README. 
+My version of the Name Game. This is an example application to view my style of software development. I tried to include examples of some major programming/iOS practices like: Recursion , Inheritance, Extensions, Protocols, Views From Nib, MultiThreading, Singletons, Core Data, Classes, Structures, CocoaPods, Linked Frameworks, Constants, Pass-By-Value, Pass-By-Reference, URL Sessions, Object Oriented Programming. I do admit that it was rather challenging implementing this in under 8 hours. I took a couple hours longer to refactor and write this README. 
 
 ![Login View](img/ScreenShot.png)
-Shout out to Sketch for making this photo in under a minute.
+Special thanks Sketch for making this photo in under a minute.
 
 ## Getting Started
-If your're view the project from a zip please click [GitHubLink]
-                                                     [GitHubLink](https://github.com/MrZachChandler/NameGame)
+
 ### Dependency Management
 
 #### CocoaPods
 
- I committed the installed dependencies to my repo, instead having each developer running `pod install` after a fresh checkout.
+ I committed the installed dependencies to my repo, instead having each developer running `pod install` after a fresh checkout or clone.
 
 Note, you'll need to open the `.xcworkspace` file instead of `.xcproject`, or your code will not compile.
 
@@ -21,17 +21,17 @@ Note, you'll need to open the `.xcworkspace` file instead of `.xcproject`, or yo
 will update all pods to the newest versions permitted by the Podfile.
 
 ##### Alamofire
-I used Alamofire to complete the inital http request to access your backend service. Although, for image loading I used URLSession.shared.dataTask to show I am competent using third-party dependencies or included resources from Swift.
+I used Alamofire to complete the inital http request to access your backend service. Although, for image loading I used URLSession.shared.dataTask to illuminate competency using third-party dependencies or included Swift resources.
 
 ##### SwiftyJSON
 This is used as an easy way to parse the JSON returned by my Alamofire request. It greatly increases readability within my request.
 
-
 #### Carthage
-I recently built an app out of hope that someone at WillowTreeApps would notice, I had added Spruce to my Carthage file before that project and when I was linking the frankwork I copied the framework to my project. This makes the Spruce package appear in Xcode, this is not the correct way to add it, but due to time I left it in the project. Consequently, it impacts my built time becauce it has to create the binary. Luckily, Spruce is already light weight.
+I recently built an app out of hope that someone at WillowTreeApps would notice, I had added Spruce to my Carthage file before that project and when I was linking the framework I copied the resource to my project. This makes the Spruce package appear in Xcode, this is not the correct way to add it, but due to time I left it in the project. Consequently, it impacts my built time becauce it has to create the binary. Luckily, Spruce is already light weight.
 
 ##### Spruce
 I used the Spruce example project to create an AnimationViewController, which is inherited by my GameViewCrontrller. This spruces up the transition between rounds and gives a better experience that user is progressing forward in the game even through they are staying on the same screen.
+I added a function called reload(). It is called from inside callAnimation() during completion of DispatchQueue.main.async. When I override this function in GameViewController. I can control the timing of replacing curRound with the nextRound. I did this so the animation and reloading the collectionView with new data can happen synchronously.
 
 ## Project Structure
 
@@ -39,7 +39,7 @@ I used the Spruce example project to create an AnimationViewController, which is
 
 ### MVVM/MVC
 
-I used a MVVM Design Pattern in mind when constructing this project. Although, my GameViewController does not technically own my NameGame class(the ViewModel). The NameGame class is a Singleton becuase it supplies not only GameViewController, but MenuViewController with the neccessary information to update the view. This helps decouple my codebase. I still manipulate Rounds within my GameViewController. I add the current round's Statistics, taps and time. That model manipulation is typically a MVC standard, but it has no effect on the view. At the end of each round, I append the round to the shared instance of NameGame.  
+I used a MVVM Design Pattern in mind when constructing this project. Although, my GameViewController does not technically own my NameGame class(the ViewModel). The NameGame class is a Singleton becuase it supplies not only GameViewController, but MenuViewController with the neccessary information to update the view. This helps decouple my codebase. I still manipulate Rounds within my GameViewController. I add the current round's Statistics, taps and time. That model manipulation is typically a MVC standard, but it has no effect on the view. At the end of each round, I append the curRound to the shared instance of NameGame.  
 
 At the start of each round, I load the next round from FaceGame to prepare. My original idea was to start loading the images for the next round in the background during the current round so each round would be preloaded and ready to view. I did not implement this feature due to time, but would be a great way to increase user experience.
 
@@ -97,6 +97,7 @@ Modes are global constants used to translate the game type when loading rounds f
     * The more I think about this
 *   getStats() -> Statistics
     * Returns: Statistics of the current gaame
+    * This function also destroys all of the current game's rounds and updates its stats with the combined new rounds
 *   updateStats()
     * Saves the context to Core Data and creates it if it does not exist yet
 *   getStatsFromCoreData()
@@ -111,7 +112,7 @@ Modes are global constants used to translate the game type when loading rounds f
 #### Instance Variables
 
 #### Note
-Since classes are Pass-By-Reference - by keeping a reference to the current UI I can update the cells without reloading the data for the collectionViewCell
+Since classes are Pass-By-Reference - by keeping a reference to the current UICells I can update the cells without reloading the data for the collectionViewCell
 *   faceCells: [FaceCollectionViewCell] = []
 *   whoIsCells: [WhoIsCell] = []
 
@@ -120,7 +121,7 @@ Since classes are Pass-By-Reference - by keeping a reference to the current UI I
 *   timeCount = 0.0
 *   mode: Int
 *   revealedCells: [Int] = [0,0,0,0,0,0]
-* These track tapped cells to stop duplicate reveals/taps
+    * These track tapped cells to stop duplicate reveals/taps
 *   roundOver = false
 *   curRound: Round?
 *   nextRound: Round?
@@ -138,9 +139,6 @@ Since classes are Pass-By-Reference - by keeping a reference to the current UI I
 *   revealHint()
 
 ### AnimationViewController
-
-#### Note
-The AnimationViewConrtoller is mostly taken from the example project, but I added a function called reload(). It is called from inside callAnimation() during completion of DispatchQueue.main.async. When I override this function in GameViewController. I can control the timing of replacing nextRound with the curRound. I did this becuase the animation and reloading the collectionView with new data can happen synchronously.
 
 #### Instance Variables
 
@@ -227,7 +225,7 @@ The AnimationViewConrtoller is mostly taken from the example project, but I adde
 ### FaceCollectionViewCell
 
 #### Note
-These collection view cells obviously are super similar, they should inherit from a super class
+These collection view cells obviously are super similar, they should inherit from a custom super class.
 
 #### Instance Variables
 *   isCorrect: Bool
@@ -254,6 +252,11 @@ These collection view cells obviously are super similar, they should inherit fro
 
 *   setup(person: Person)
 *   reveal()->Bool
+
+
+##TODO:
+*   Testing: Unit and UI Testing are essential to application development. 
+*   Testing Should Include: Bounds, Input, Output, Interactive UI Elements, and all scenerios for all functions
 
 
 
