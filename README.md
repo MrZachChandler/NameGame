@@ -246,7 +246,7 @@ These collection view cells obviously are super similar, they should inherit fro
 *   reveal()->Bool
 
 
-##TODO:
+## TODO:
 ### Unit Testing
 *   Testing: Unit and UI Testing are essential to application development. 
 *   Testing Should Include: Bounds, Input, Output, Interactive UI Elements, and all scenerios for all functions
