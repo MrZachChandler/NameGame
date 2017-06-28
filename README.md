@@ -3,7 +3,7 @@
 My version of the Name Game. This is an example application to view my style of software development. I tried to include examples of some major programming/iOS practices like: Recursion , Inheritance, Extensions, Protocols, Views From Nib, Multi-Threading, Singletons, Core Data, Classes, Structures, CocoaPods, Linked Frameworks (Spruce), Constants, Pass-By-Value, Pass-By-Reference, URL Sessions, Object Oriented Programming. I do admit that it was rather challenging implementing this in under 8 hours. I took a couple hours longer to refactor and write this README. 
 
 ![Login View](img/ScreenShot.png)
-
+Shout out to Sketch for making this photo in under a minute.
 
 ## Getting Started
 
@@ -40,9 +40,11 @@ I used the Spruce example project to create an AnimationViewController, which is
 
 I used a MVVM Design Pattern in mind when constructing this project. Although, my GameViewController does not technically own my NameGame class(the ViewModel). The NameGame class is a Singleton becuase it supplies not only GameViewController, but MenuViewController with the neccessary information to update the view. This helps decouple my codebase. I still manipulate Rounds within my GameViewController. I add the current round's Statistics, taps and time. That model manipulation is typically a MVC standard, but it has no effect on the view. At the end of each round, I append the round to the shared instance of NameGame.  
 
-At the start of each round, I load the next round from FaceGame to prepare. My original idea was to start loading the images for the next in the background during the current round so each round would be preloaded and ready to view. I did not implement this feature due to time, but would be a great way to increase user experience.
+At the start of each round, I load the next round from FaceGame to prepare. My original idea was to start loading the images for the next round in the background during the current round so each round would be preloaded and ready to view. I did not implement this feature due to time, but would be a great way to increase user experience.
 
-#### Modes
+## Classes and Structures
+
+### Modes
 
 Modes are global constants used to translate the game type when loading rounds from NameGame and creating the view in GameViewController
 *   NORMAL = 1
@@ -53,9 +55,9 @@ Modes are global constants used to translate the game type when loading rounds f
 *   FIFTY = 6
     * This mode is used for my own idea for a game type, where you have one guess and a 50/50 chance.
 
-#### Class NameGame
+### Class NameGame
 
-##### Instance Variables
+#### Instance Variables
 
 *   static sharedInstance = NameGame()
     *   Creation of the Singleton object
@@ -72,7 +74,7 @@ Modes are global constants used to translate the game type when loading rounds f
 *   statistics = Statistics()
     * The NameGame's lifetime running statistics of the player
 
-##### Functions
+#### Functions
 *   fileprivate override init()
     * calls super for NSObject and calls getDataFromCoreData()
 *   func getGameData(completion: @escaping (_ result: Bool) -> Void)
@@ -84,6 +86,7 @@ Modes are global constants used to translate the game type when loading rounds f
     * Param: MODE
     * Returns: The next round for the view
     * Uses MODE to determine the source of people for the round, then chooses random people from the source and calls func noDuplicatePeople(indexArray, testIndex ,source)
+#### Note
 *   func noDuplicatePeople(indexArray: [Int], testIndex:Int ,source:[Person])->Int
     * Param: indexArray to be tested, the int to be tested, and source of people to find the count
     * Returns: an int that is unique
@@ -95,35 +98,35 @@ Modes are global constants used to translate the game type when loading rounds f
 *   getStatsFromCoreData()
     * gets the context to Core Data
 
-#### AnimationViewController
+### AnimationViewController
 
-##### Note
+#### Note
 The AnimationViewConrtoller is mostly taken from the example project, but I added a function called reload(). It is called from inside callAnimation() during completion of DispatchQueue.main.async. When I override this function in GameViewController. I can control the timing of replacing nextRound with the curRound. I did this becuase the animation and reloading the collectionView with new data can happen synchronously.
 
-##### Instance Variables
+#### Instance Variables
 
 *   animations: [StockAnimation]
 *   sortFunction: SortFunction?
 *   animationView: UIView?
 *   timer: Timer?
 
-##### Functions
+#### Functions
 
 *   setup()
 *   prepareAnimation()
 *   callAnimation()
 *   reload()
 
-#### Class Statistics
+### Statistics
 
-##### Instance Variables
+#### Instance Variables
 
 *   correctTaps = 0
 *   incorrectTaps = 0
 *   totalTaps = 0
 *   time = 0.0
 
-##### Functions
+#### Functions
 
 *   addCorrectTap()
 
@@ -145,9 +148,9 @@ The AnimationViewConrtoller is mostly taken from the example project, but I adde
 
 *   getIncorrectTaps()-> Int
 
-#### struct Person 
+### struct Person 
 
-##### Instance Variables
+#### Instance Variables
 
 *   firstName = ""
 *   lastName = ""
@@ -155,20 +158,20 @@ The AnimationViewConrtoller is mostly taken from the example project, but I adde
 *   jobTitle = ""
 *   isCorrect = false
 
-#### struct Round
+### struct Round
 
-##### Instance Variables
+#### Instance Variables
 
 *   stats = Statistics()
 *   faces: [Person] = []
 
-#### class GameViewController: AnimationViewController 
+### GameViewController: AnimationViewController 
 
-##### Extensions
+#### Extensions
 *   UICollectionViewDelegateFlowLayout
 *   UICollectionViewDataSource
 
-##### Instance Variables
+#### Instance Variables
 
 *   collectionView: UICollectionView!
 *   faceCells: [FaceCollectionViewCell] = []
@@ -185,7 +188,7 @@ The AnimationViewConrtoller is mostly taken from the example project, but I adde
 *   nextRound: Round?
 *   correctAnswer: Person?
 
-##### Functions
+#### Functions
 
 *   init(nibName nibNameOrNil:String?, bundle nibBundleOrNil:Bundle?,round: Round, animations: [StockAnimation],mode:Int) 
 *   getNextRound() 
@@ -196,9 +199,9 @@ The AnimationViewConrtoller is mostly taken from the example project, but I adde
 *   stopTimer()
 *   revealHint()
 
-#### MenuViewController
+### MenuViewController
 
-##### Instance Variables
+#### Instance Variables
 
 *   flag: Int
 *   gameButtons: [UIButton]
@@ -206,7 +209,7 @@ The AnimationViewConrtoller is mostly taken from the example project, but I adde
 *   stats: Statistics
 *   activityIndicator: UIActivityIndicatorView! 
 
-##### Functions
+#### Functions
 
 *   setStats()
 *   showErrorAlert()
@@ -216,26 +219,27 @@ The AnimationViewConrtoller is mostly taken from the example project, but I adde
 *   hideUI()
 *   showUI()
 
-#### FaceCollectionViewCell
+### FaceCollectionViewCell
 
 #### Note
 These collection view cells obviously are super similar, they should inherit from a super class
 
-##### Instance Variables
+#### Instance Variables
 *   isCorrect: Bool
 *   cellSize: CGSize
 *   imageView: UIImageview
 *   nameLabel: UILabel
 
-##### Functions
+#### Functions
 
 *   setup(person: Person)
 *   reveal()->Bool
 *   imageFromURL(urlString: String)
+    * Background fetch updates main thread after completion
 
-#### WhoIsCell
+### WhoIsCell
 
-##### Instance Variables
+#### Instance Variables
 
 *   isCorrect: Bool
 *   cellSize: CGSize
