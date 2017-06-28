@@ -125,19 +125,37 @@ public class NameGame: NSObject {
         
         var indexArray: [Int] = []
 
-        //Get n random people
-        for i in 0 ..< numberOfPeople {
-            
-            let randomNum:UInt32 = arc4random_uniform(UInt32(source.count))
-
-            var index:Int = Int(randomNum)
-            if i != 0{
-                index = noDuplicatePeople(indexArray: indexArray, testIndex: index, source: source)
+        if mode != MATT{
+            //Get n random people
+            for i in 0 ..< numberOfPeople {
+                
+                let randomNum:UInt32 = arc4random_uniform(UInt32(source.count))
+                
+                var index:Int = Int(randomNum)
+                if i != 0{
+                    index = noDuplicatePeople(indexArray: indexArray, testIndex: index, source: source)
+                }
+                indexArray.append(index)
+                nextRound.faces.append(source[index])
+                
             }
-            indexArray.append(index)
-            nextRound.faces.append(source[index])
+        
+        }else{
+            //remove worst case
+            var mattIndices: [Int] = [0,1,2,3,4,5,6]
+
+            while mattIndices.count != 1{
+
+                let randomNum:UInt32 = arc4random_uniform(UInt32(mattIndices.count))
+                let randomIndex = mattIndices[Int(randomNum)]
+                indexArray.append(randomIndex)
+                mattIndices.remove(at: Int(randomNum))
+                nextRound.faces.append(source[randomIndex])
+
+            }
             
         }
+        
         
         // choose correct person
         
