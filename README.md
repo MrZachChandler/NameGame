@@ -98,6 +98,41 @@ Modes are global constants used to translate the game type when loading rounds f
 *   getStatsFromCoreData()
     * gets the context to Core Data
 
+### GameViewController: AnimationViewController 
+
+#### Extensions
+*   UICollectionViewDelegateFlowLayout
+*   UICollectionViewDataSource
+
+#### Instance Variables
+
+#### Note
+Since classes are Pass-By-Reference - by keeping a reference to the current UI I can update the cells without reloading the data for the collectionViewCell
+*   faceCells: [FaceCollectionViewCell] = []
+*   whoIsCells: [WhoIsCell] = []
+
+*   collectionView: UICollectionView!
+*   gameClock = Timer() 
+*   timeCount = 0.0
+*   mode: Int
+*   revealedCells: [Int] = [0,0,0,0,0,0]
+* These track tapped cells to stop duplicate reveals/taps
+*   roundOver = false
+*   curRound: Round?
+*   nextRound: Round?
+*   correctAnswer: Person?
+
+#### Functions
+
+*   init(nibName nibNameOrNil:String?, bundle nibBundleOrNil:Bundle?,round: Round, animations: [StockAnimation],mode:Int) 
+*   getNextRound() 
+*   startNextRound(sender: UIBarButtonItem)
+*   findCorrectAnswer()
+*   backToMenu(sender: UIBarButtonItem)
+*   startTimer()
+*   stopTimer()
+*   revealHint()
+
 ### AnimationViewController
 
 #### Note
@@ -164,40 +199,6 @@ The AnimationViewConrtoller is mostly taken from the example project, but I adde
 
 *   stats = Statistics()
 *   faces: [Person] = []
-
-### GameViewController: AnimationViewController 
-
-#### Extensions
-*   UICollectionViewDelegateFlowLayout
-*   UICollectionViewDataSource
-
-#### Instance Variables
-
-*   collectionView: UICollectionView!
-*   faceCells: [FaceCollectionViewCell] = []
-    * References to current cells on the board. to apply UI Functions
-*   whoIsCells: [WhoIsCell] = []
-    * References to current cells on the board. to apply UI Functions
-*   gameClock = Timer() 
-*   timeCount = 0.0
-*   mode: Int
-*   revealedCells: [Int] = [0,0,0,0,0,0]
-    * These track tapped cells to stop duplicate reveals/taps
-*   roundOver = false
-*   curRound: Round?
-*   nextRound: Round?
-*   correctAnswer: Person?
-
-#### Functions
-
-*   init(nibName nibNameOrNil:String?, bundle nibBundleOrNil:Bundle?,round: Round, animations: [StockAnimation],mode:Int) 
-*   getNextRound() 
-*   startNextRound(sender: UIBarButtonItem)
-*   findCorrectAnswer()
-*   backToMenu(sender: UIBarButtonItem)
-*   startTimer()
-*   stopTimer()
-*   revealHint()
 
 ### MenuViewController
 
