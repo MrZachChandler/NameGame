@@ -53,7 +53,7 @@ Modes are global constants used to translate the game type when loading rounds f
 *   FIFTY = 6
     * This mode is used for my own idea for a game type, where you have one guess and a 50/50 chance.
 
-#### NameGame
+#### Class NameGame
 
 ##### Instance Variables
 
@@ -92,12 +92,159 @@ Modes are global constants used to translate the game type when loading rounds f
     * Returns: Statistics of the current gaame
 *   updateStats()
     * Saves the context to Core Data and creates it if it does not exist yet
-*   updateStats()
+*   getStatsFromCoreData()
     * gets the context to Core Data
 
+#### AnimationViewController
 
+##### Note
+The AnimationViewConrtoller is mostly taken from the example project, but I added a function called reload(). It is called from inside callAnimation() during completion of DispatchQueue.main.async. When I override this function in GameViewController. I can control the timing of replacing nextRound with the curRound. I did this becuase the animation and reloading the collectionView with new data can happen synchronously.
 
+##### Instance Variables
 
+*   animations: [StockAnimation]
+*   sortFunction: SortFunction?
+*   animationView: UIView?
+*   timer: Timer?
+
+##### Functions
+
+*   setup()
+*   prepareAnimation()
+*   callAnimation()
+*   reload()
+
+#### Class Statistics
+
+##### Instance Variables
+
+*   correctTaps = 0
+*   incorrectTaps = 0
+*   totalTaps = 0
+*   time = 0.0
+
+##### Functions
+
+*   addCorrectTap()
+
+*   addIncorrectTap()
+
+*   addCorrectTaps(taps: Int)
+
+*   addIncorrectTaps(taps: Int)
+
+*   getTotalTaps() -> Int
+
+*   setTime(time: Double)
+
+*   getTime() -> Double
+
+*   getClickRatio() -> Double
+
+*   getCorrectTaps()-> Int
+
+*   getIncorrectTaps()-> Int
+
+#### struct Person 
+
+##### Instance Variables
+
+*   firstName = ""
+*   lastName = ""
+*   imageUrl = ""
+*   jobTitle = ""
+*   isCorrect = false
+
+#### struct Round
+
+##### Instance Variables
+
+*   stats = Statistics()
+*   faces: [Person] = []
+
+#### class GameViewController: AnimationViewController 
+
+##### Extensions
+*   UICollectionViewDelegateFlowLayout
+*   UICollectionViewDataSource
+
+##### Instance Variables
+
+*   collectionView: UICollectionView!
+*   faceCells: [FaceCollectionViewCell] = []
+    * References to current cells on the board. to apply UI Functions
+*   whoIsCells: [WhoIsCell] = []
+    * References to current cells on the board. to apply UI Functions
+*   gameClock = Timer() 
+*   timeCount = 0.0
+*   mode: Int
+*   revealedCells: [Int] = [0,0,0,0,0,0]
+    * These track tapped cells to stop duplicate reveals/taps
+*   roundOver = false
+*   curRound: Round?
+*   nextRound: Round?
+*   correctAnswer: Person?
+
+##### Functions
+
+*   init(nibName nibNameOrNil:String?, bundle nibBundleOrNil:Bundle?,round: Round, animations: [StockAnimation],mode:Int) 
+*   getNextRound() 
+*   startNextRound(sender: UIBarButtonItem)
+*   findCorrectAnswer()
+*   backToMenu(sender: UIBarButtonItem)
+*   startTimer()
+*   stopTimer()
+*   revealHint()
+
+#### MenuViewController
+
+##### Instance Variables
+
+*   flag: Int
+*   gameButtons: [UIButton]
+*   statLabels: [UILabel]
+*   stats: Statistics
+*   activityIndicator: UIActivityIndicatorView! 
+
+##### Functions
+
+*   setStats()
+*   showErrorAlert()
+*   loadData()
+*   startGame(mode: Int)
+*   gameModeSelected (sender: AnyObject)
+*   hideUI()
+*   showUI()
+
+#### FaceCollectionViewCell
+
+#### Note
+These collection view cells obviously are super similar, they should inherit from a super class
+
+##### Instance Variables
+*   isCorrect: Bool
+*   cellSize: CGSize
+*   imageView: UIImageview
+*   nameLabel: UILabel
+
+##### Functions
+
+*   setup(person: Person)
+*   reveal()->Bool
+*   imageFromURL(urlString: String)
+
+#### WhoIsCell
+
+##### Instance Variables
+
+*   isCorrect: Bool
+*   cellSize: CGSize
+*   nameLabel: UILabel
+
+##### Functions
+
+*   setup(person: Person)
+*   reveal()->Bool
 
 
 

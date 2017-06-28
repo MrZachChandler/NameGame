@@ -10,7 +10,7 @@ import Foundation
 
 let NORMAL = 1
 let MATT = 2
-let REVERSE = 3
-let TEAM = 4
+let TEAM = 3
+let REVERSE = 4
 let HINT = 5
 let FIFTY = 6
