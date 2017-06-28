@@ -91,10 +91,11 @@ Modes are global constants used to translate the game type when loading rounds f
 *   func noDuplicatePeople(indexArray: [Int], testIndex:Int ,source:[Person])->Int
     * Param: indexArray to be tested, the int to be tested, and source of people to find the count
     * Returns: an int that is unique
-    * This is a recursive function that if the testIndex equals another element in the indexArray, it makes a recursive call on a subArray of the indexArray. The subArray is created by every loop iteration it adds a new element from the indexArray that has been checked already. If a match occurs the subArray is used so that the function that made the nested call does not reiterate over already checked elements. In case the newTestInt matches elements of the subArray further nested calls are made. Each nested call shrinks the problem size down so that upon the return it only has the remaining members of the indexArray to check. 
-    * Upon evaluation worst case is still O(n^2) but the larger the source it approaches constant time. The probability of matches decrease exponitially. In this scenerio, MATT is the worst case becuase the source has a range of 7 and 6 elements are needed. So I made a work around that is O(n) rather than O(n^2). 
-        * How it works is an array of indices that correlate with the length of the source. When a random index is chosen the number is removed from the indices and used as the index for the source. It loops until there is one index left. 
-    * The more I think about this
+    * This is a recursive function that if the testIndex equals another element in the indexArray, it makes a recursive call on a subArray of the indexArray. The subArray is created by every loop iteration it adds a new element from the indexArray that has been checked already. If a match occurs the subArray is used so that the function that made the original call does not reiterate over already checked elements. Each nested call shrinks the problem size down so that upon the return it only has the remaining members of the indexArray to check. 
+    * Upon evaluation worst case is still O(n^2), but the larger the source length is the function begins to approach constant time. The probability of matches decrease exponentially. In this scenerio, MATT is the worst case scenerio becuase the source has a range of 7 and (6 = n) elements are needed. That makes the probability really high that matches will occur. I have dubbed this the MATT Problem.  
+    * So I made a solution that is O(n) rather than O(n^2). How it works is an array of indices that correlate with the length of the source. When a random index is chosen the number is removed from the indices and used as the index for the source. It loops until there is n random indices are filled. 
+    * The more I think about this problem the probability of a matching random number decreases as the source length increases past N. There must be a point in time when the probability is low enough to switch from the MATT Solution to noDuplicatePeople. Not to mention if the solution length was to large then it would take to much time to create a new array of indices, something to note. 
+
 *   getStats() -> Statistics
     * Returns: Statistics of the current gaame
     * This function also destroys all of the current game's rounds and updates its stats with the combined new rounds
@@ -166,23 +167,14 @@ Since classes are Pass-By-Reference - by keeping a reference to the current UICe
 #### Functions
 
 *   addCorrectTap()
-
 *   addIncorrectTap()
-
 *   addCorrectTaps(taps: Int)
-
 *   addIncorrectTaps(taps: Int)
-
 *   getTotalTaps() -> Int
-
 *   setTime(time: Double)
-
 *   getTime() -> Double
-
 *   getClickRatio() -> Double
-
 *   getCorrectTaps()-> Int
-
 *   getIncorrectTaps()-> Int
 
 ### struct Person 
@@ -255,6 +247,7 @@ These collection view cells obviously are super similar, they should inherit fro
 
 
 ##TODO:
+### Unit Testing
 *   Testing: Unit and UI Testing are essential to application development. 
 *   Testing Should Include: Bounds, Input, Output, Interactive UI Elements, and all scenerios for all functions
 
