@@ -11,9 +11,7 @@ My version of the Name Game. This is an example application to view my style of 
 
 #### CocoaPods
 
-sudo gem install cocoapods
-
-to install the libraries and include them as part of a workspace which also holds your own project. I  [committed the installed dependencies to my repo][committing-pods], instead having each developer running `pod install` after a fresh checkout.
+ I committed the installed dependencies to my repo, instead having each developer running `pod install` after a fresh checkout.
 
 Note, you'll need to open the `.xcworkspace` file instead of `.xcproject`, or your code will not compile.
 
@@ -90,7 +88,12 @@ Modes are global constants used to translate the game type when loading rounds f
     * Param: indexArray to be tested, the int to be tested, and source of people to find the count
     * Returns: an int that is unique
     * This is a recursive function that if the testIndex equals another element in the indexArray, it makes a recursive call on a subArray of the indexArray. The subArray is created by every loop iteration it adds a new element from the indexArray that has been checked already. If a match occurs the subArray is used so that the function that made the nested call does not reiterate over already checked elements. In case the newTestInt matches elements of the subArray further nested calls are made. Each nested call shrinks the problem size down so that upon the return it only has the remaining members of the indexArray to check. Upon evaluation worst case is still O(n^2) but the larger the source it approaches constant time. The probability of matches decrease exponitially. In this scenerio, MATT is the worst case becuase the source has a range of 7 and 6 elements are needed. So I made a work around that is O(n) rather than O(n^2). This only works for problems when you know the length of the source. How it works is an array of indices that correlate with the length of the source. When a random index is chosen the number is removed from the indices and used as the index for the source. It loops until there is one index left. 
-
+*   getStats() -> Statistics
+    * Returns: Statistics of the current gaame
+*   updateStats()
+    * Saves the context to Core Data and creates it if it does not exist yet
+*   updateStats()
+    * gets the context to Core Data
 
 
 
